@@ -1,4 +1,5 @@
 const model = require('./model.js');
+const utils = require("./utils.js");
 
 const Success_result = {
     code: 0,
@@ -43,7 +44,9 @@ const get_added_hero_list = async ctx => {
 
     const res = await model.query(sql);
 
-    ctx.body = { ...Success_result, data: res }
+    const targetRes = utils.formatResult(ctx.request.url.substr(1), res); 
+
+    ctx.body = { ...Success_result, data: targetRes }
 }
 
 // 获取待添加的英雄列表
@@ -55,7 +58,17 @@ const get_notadd_hero_list = async ctx => {
     ctx.body = { ...Success_result, data: res }
 }
 
-// 
+// 查看英雄详情
+const get_hero_detail = async ctx => {
+    const { hid } = ctx.request.body;
+
+    const sql = ``;
+
+
+    const res = await model.query(sql);
+
+    ctx.body = { ...Success_result, data: res }
+}
 
 
 module.exports = {

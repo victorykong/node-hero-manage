@@ -8,6 +8,6 @@ page
     .use(middleware.validateParams())
     .post("/get_added_hero_list", ctx => Controller.get_added_hero_list(ctx))
     .get("/get_notadd_hero_list", ctx => Controller.get_notadd_hero_list(ctx))
-
+    .post("/get_hero_detail", ctx => Controller.get_hero_detail(ctx))
 
 module.exports = page;
