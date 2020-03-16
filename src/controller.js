@@ -46,7 +46,8 @@ const get_added_hero_list = async ctx => {
 
     const targetRes = utils.formatResult(ctx.request.url.substr(1), res);
 
-    ctx.body = targetRes
+    ctx.body = { ...Success_result, data: targetRes }
+
 }
 
 // 获取待添加的英雄列表
@@ -73,7 +74,9 @@ const get_hero_detail = async ctx => {
 
     const targetRes = utils.formatResult(ctx.request.url.substr(1), res);
 
-    ctx.body = targetRes[0];
+    ctx.body = { ...Success_result, data: targetRes[0] };
+
+
 }
 
 module.exports = {
