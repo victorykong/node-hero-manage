@@ -17,27 +17,28 @@ const get_added_hero_list = async ctx => {
     if (position_type !== 0 && search_key !== "") {
         sql = `SELECT hero_detail.*,hero_extra_skills.* FROM 
                 hero_detail LEFT JOIN hero_extra_skills ON hero_detail.eid = hero_extra_skills.eid
-                WHERE hero_name like '${search_key}%' AND 
+                WHERE is_add=1 AND hero_name like '${search_key}%' AND 
                 position=${position_type}
                 ORDER BY update_time DESC `
     } else {
         sql = `SELECT hero_detail.*,hero_extra_skills.* FROM 
                 hero_detail LEFT JOIN hero_extra_skills ON hero_detail.eid = hero_extra_skills.eid
+                WHERE is_add=1
                 ORDER BY update_time DESC `
     }
 
     if (position_type === 0 && search_key !== "") {
         sql = `SELECT hero_detail.*,hero_extra_skills.* FROM 
                 hero_detail LEFT JOIN hero_extra_skills ON hero_detail.eid = hero_extra_skills.eid
-                WHERE hero_name like '${search_key}%'
+                WHERE is_add=1 AND hero_name like '${search_key}%'
                 ORDER BY update_time DESC `
     }
 
     if (position_type !== 0 && search_key === "") {
         sql = `SELECT hero_detail.*,hero_extra_skills.* FROM 
-                    hero_detail LEFT JOIN hero_extra_skills ON hero_detail.eid = hero_extra_skills.eid
-                    WHERE position=${position_type}
-                    ORDER BY update_time DESC `
+                hero_detail LEFT JOIN hero_extra_skills ON hero_detail.eid = hero_extra_skills.eid
+                WHERE is_add=1 AND position=${position_type}
+                ORDER BY update_time DESC `
     }
 
     const res = await model.query(sql);
@@ -45,7 +46,19 @@ const get_added_hero_list = async ctx => {
     ctx.body = { ...Success_result, data: res }
 }
 
+// 获取待添加的英雄列表
+const get_notadd_hero_list = async ctx => {
+    const sql = `SELECT hid,avatar_url,hero_name, position FROM hero_detail WHERE is_add=0;`;
+
+    const res = await model.query(sql);
+
+    ctx.body = { ...Success_result, data: res }
+}
+
+// 
+
 
 module.exports = {
-    get_added_hero_list
+    get_added_hero_list,
+    get_notadd_hero_list
 }
