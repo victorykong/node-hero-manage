@@ -12,7 +12,7 @@ const validateParams = () => {
         const url = ctx.request.url.substr(1); // 接口
         const body = ctx.request.body; // 请求体参数
 
-        if (JSON.stringify(ctx.request.body) !== "{}") {
+        if (Reflect.ownKeys(Params).includes(url)) {
             for (let param of Reflect.ownKeys(Params[url])) {
                 if (!Reflect.ownKeys(body).includes(param)) { // 必填
                     return ctx.body = { ...Error_result, message: `${param} is require!` };

@@ -44,7 +44,7 @@ const get_added_hero_list = async ctx => {
 
     const res = await model.query(sql);
 
-    const targetRes = utils.formatResult(ctx.request.url.substr(1), res); 
+    const targetRes = utils.formatResult(ctx.request.url.substr(1), res);
 
     ctx.body = { ...Success_result, data: targetRes }
 }
@@ -62,16 +62,21 @@ const get_notadd_hero_list = async ctx => {
 const get_hero_detail = async ctx => {
     const { hid } = ctx.request.body;
 
-    const sql = ``;
+    const sql = `SELECT hero_detail.*,hero_extra_skills.*,hero_property.*,hero_skills.* FROM hero_detail 
+                    LEFT JOIN hero_extra_skills ON hero_detail.eid = hero_extra_skills.eid
+                    LEFT JOIN hero_property ON hero_detail.hid = hero_property.hid
+                    LEFT JOIN hero_skills ON hero_detail.hid = hero_skills.hid
+                    WHERE hero_detail.hid=${hid};`;
 
 
     const res = await model.query(sql);
 
-    ctx.body = { ...Success_result, data: res }
+    ctx.body = res;
 }
 
 
 module.exports = {
     get_added_hero_list,
-    get_notadd_hero_list
+    get_notadd_hero_list,
+    get_hero_detail
 }
