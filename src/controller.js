@@ -102,7 +102,7 @@ const set_like_of_hero = async ctx => {
 // 添加/删除英雄
 const update_hero_status = async ctx => {
     const { hid, status } = ctx.request.body;
-    const sql = `UPDATE hero_detail SET is_add=${status} WHERE hid=${hid};`;
+    const sql = `UPDATE hero_detail SET is_add=${status},update_time=${Date.now()}  WHERE hid=${hid};`;
     const res = await model.query(sql);
 
     if (res && res.affectedRows === 1) {
@@ -113,7 +113,7 @@ const update_hero_status = async ctx => {
 // 更新英雄的召唤师技能
 const update_hero_extra_skills = async ctx => {
     const { hid, eid } = ctx.request.body;
-    const sql = `UPDATE hero_detail SET eid=${eid} WHERE hid=${hid};`
+    const sql = `UPDATE hero_detail SET eid=${eid},update_time=${Date.now()}  WHERE hid=${hid};`
     const res = await model.query(sql);
 
     if (res && res.affectedRows === 1) {

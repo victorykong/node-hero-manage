@@ -12,6 +12,10 @@ const Params = {
     update_hero_status: {
         hid: "[object Number]",
         status: "[object Number]"
+    },
+    update_hero_extra_skills: {
+        hid: "[object Number]",
+        eid: "[object Number]"
     }
 
 };
