@@ -70,6 +70,12 @@ const get_hero_detail = async ctx => {
 
 
     const res = await model.query(sql);
+    const obj = {};
+
+    for (let val of res) {
+        Object.assign(obj, val)
+    }
+
 
     ctx.body = res;
 }
