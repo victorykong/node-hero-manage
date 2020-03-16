@@ -5,6 +5,13 @@ const Params = {
     },
     get_hero_detail: {
         hid: "[object Number]"
+    },
+    set_like_of_hero: {
+        hid: "[object Number]"
+    },
+    update_hero_status: {
+        hid: "[object Number]",
+        status: "[object Number]"
     }
 
 };

@@ -79,8 +79,56 @@ const get_hero_detail = async ctx => {
 
 }
 
+// 获取召唤师技能列表
+const get_extra_skills_list = async ctx => {
+    const sql = `SELECT * FROM hero_extra_skills`;
+
+    const res = await model.query(sql);
+
+    ctx.body = { ...Success_result, data: res };
+}
+
+// 为英雄点赞
+const set_like_of_hero = async ctx => {
+    const { hid } = ctx.request.body;
+    const sql = `UPDATE hero_detail SET like_count=like_count+1 WHERE hid=${hid};`;
+    const res = await model.query(sql);
+
+    if (res && res.affectedRows === 1) {
+        ctx.body = Success_result;
+    }
+}
+
+// 添加/删除英雄
+const update_hero_status = async ctx => {
+    const { hid, status } = ctx.request.body;
+    const sql = `UPDATE hero_detail SET is_add=${status} WHERE hid=${hid};`;
+    const res = await model.query(sql);
+
+    if (res && res.affectedRows === 1) {
+        ctx.body = Success_result;
+    }
+}
+
+// 更新英雄的召唤师技能
+const update_hero_extra_skills = async ctx => {
+    const { hid, eid } = ctx.request.body;
+    const sql = `UPDATE hero_detail SET eid=${eid} WHERE hid=${hid};`
+    const res = await model.query(sql);
+
+    if (res && res.affectedRows === 1) {
+        ctx.body = Success_result;
+    }
+}
+
+
+
 module.exports = {
     get_added_hero_list,
     get_notadd_hero_list,
-    get_hero_detail
+    get_hero_detail,
+    get_extra_skills_list,
+    set_like_of_hero,
+    update_hero_status,
+    update_hero_extra_skills
 }
