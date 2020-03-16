@@ -70,16 +70,11 @@ const get_hero_detail = async ctx => {
 
 
     const res = await model.query(sql);
-    const obj = {};
 
-    for (let val of res) {
-        Object.assign(obj, val)
-    }
+    const targetRes = utils.formatResult(ctx.request.url.substr(1), res);
 
-
-    ctx.body = res;
+    ctx.body = targetRes;
 }
-
 
 module.exports = {
     get_added_hero_list,
