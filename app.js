@@ -4,6 +4,7 @@ const static = require('koa-static'); // 静态文件
 const bodyParser = require("koa-bodyparser");
 const page = require('./src/router.js'); // 路由
 
+const port = 8001;
 
 const app = new Koa();
 const staticPath = './src/static';
@@ -13,6 +14,6 @@ app
     .use(bodyParser({ enableTypes: ['json'] }))
     .use(page.routes())
     .use(page.allowedMethods());
-   
 
-app.listen(3000, () => console.log('server is running...'));
+
+app.listen(port, () => console.log('server is running...'));
