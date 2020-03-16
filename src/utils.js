@@ -5,7 +5,8 @@
  */
 
 const formatResult = (url, data) => {
-    let newData = {};
+    let newData = [];
+
     data.forEach(hero => {
         const temp = {};
         Object.keys(url_map[url]).forEach(i => temp[i] = {}); // 生成第一层 key
@@ -19,7 +20,7 @@ const formatResult = (url, data) => {
             }
         }
 
-        newData = { ...hero, ...temp }
+        newData.push({ ...hero, ...temp })
     })
 
     return newData;
