@@ -19,10 +19,10 @@ const get_added_hero_list = async ctx => wrapper(ctx)(async () => {
     if (position_type !== 0 && search_key !== "") {
         sql = `SELECT hero_detail.*,hero_extra_skills.* FROM 
                 hero_detail LEFT JOIN hero_extra_skills ON hero_detail.eid = hero_extra_skills.eid
-                WHERE is_add=1 AND hero_name like '?%' AND 
+                WHERE is_add=1 AND hero_name like ? AND 
                 position=?
                 ORDER BY update_time DESC;`
-        params = [search_key, position_type]
+        params = [search_key + "%", position_type]
     } else {
         sql = `SELECT hero_detail.*,hero_extra_skills.* FROM 
                 hero_detail LEFT JOIN hero_extra_skills ON hero_detail.eid = hero_extra_skills.eid
@@ -33,9 +33,8 @@ const get_added_hero_list = async ctx => wrapper(ctx)(async () => {
     if (position_type === 0 && search_key !== "") {
         sql = `SELECT hero_detail.*,hero_extra_skills.* FROM 
                 hero_detail LEFT JOIN hero_extra_skills ON hero_detail.eid = hero_extra_skills.eid
-                WHERE is_add=1 AND hero_name like '?%'
-                ORDER BY update_time DESC;`
-        params = [search_key]
+                WHERE is_add=1 AND hero_name like ? ORDER BY update_time DESC;`
+        params = [search_key + "%"]
     }
 
     if (position_type !== 0 && search_key === "") {
