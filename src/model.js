@@ -17,8 +17,12 @@ connection.connect(function (err) {
     console.log("connect success");
 });
 
-
-const query = (sql, queryPlaceHolder) => {
+/**
+ * 
+ * @param {*} sql 查询语句
+ * @param {*} queryPlaceHolder 参数化
+ */
+const query = (sql, queryPlaceHolder = []) => {
     return new Promise((resolve, reject) => {
 
         connection.query(sql, queryPlaceHolder, (error, results, fields) => {
