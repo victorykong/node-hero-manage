@@ -1,7 +1,8 @@
 const model = require('./model.js');
 const utils = require("./utils.js");
+const wrapper = require('./wrapper.js');
 
-const Success_result = {
+const Success_result = { // 成功信息对象
     code: 0,
     data: null,
     message: "操作成功"
@@ -9,7 +10,7 @@ const Success_result = {
 
 
 // 获取已添加列表的英雄
-const get_added_hero_list = async ctx => {
+const get_added_hero_list = async ctx => wrapper(ctx)(async () => {
 
     const { position_type, search_key } = ctx.request.body;
 
@@ -48,19 +49,25 @@ const get_added_hero_list = async ctx => {
 
     ctx.body = { ...Success_result, data: targetRes }
 
-}
+
+})
+
+
 
 // 获取待添加的英雄列表
-const get_notadd_hero_list = async ctx => {
+const get_notadd_hero_list = async ctx => wrapper(ctx)(async () => {
     const sql = `SELECT hid,avatar_url,hero_name, position FROM hero_detail WHERE is_add=0;`;
 
     const res = await model.query(sql);
 
     ctx.body = { ...Success_result, data: res }
-}
+})
+
+
+
 
 // 查看英雄详情
-const get_hero_detail = async ctx => {
+const get_hero_detail = async ctx => wrapper(ctx)(async () => {
     const { hid } = ctx.request.body;
 
     const sql = `SELECT hero_detail.*,hero_extra_skills.*,hero_property.*,hero_skills.* FROM hero_detail 
@@ -77,49 +84,67 @@ const get_hero_detail = async ctx => {
     ctx.body = { ...Success_result, data: targetRes[0] };
 
 
-}
+})
+
+
 
 // 获取召唤师技能列表
-const get_extra_skills_list = async ctx => {
+const get_extra_skills_list = ctx => wrapper(ctx)(async () => {
     const sql = `SELECT * FROM hero_extra_skills`;
 
     const res = await model.query(sql);
 
     ctx.body = { ...Success_result, data: res };
-}
+})
+
+
+
+
 
 // 为英雄点赞
-const set_like_of_hero = async ctx => {
+const set_like_of_hero = async ctx => wrapper(ctx)(async () => {
     const { hid } = ctx.request.body;
     const sql = `UPDATE hero_detail SET like_count=like_count+1 WHERE hid=${hid};`;
     const res = await model.query(sql);
 
     if (res && res.affectedRows === 1) {
         ctx.body = Success_result;
+    } else {
+        throw new Error(); // action wrapper catch
     }
-}
+})
+
+
+
 
 // 添加/删除英雄
-const update_hero_status = async ctx => {
+const update_hero_status = async ctx => wrapper(ctx)(async () => {
     const { hid, status } = ctx.request.body;
     const sql = `UPDATE hero_detail SET is_add=${status},update_time=${Date.now()}  WHERE hid=${hid};`;
     const res = await model.query(sql);
 
     if (res && res.affectedRows === 1) {
         ctx.body = Success_result;
+    } else {
+        throw new Error();
     }
-}
+})
+
+
+
 
 // 更新英雄的召唤师技能
-const update_hero_extra_skills = async ctx => {
+const update_hero_extra_skills = async ctx => wrapper(ctx)(async () => {
     const { hid, eid } = ctx.request.body;
     const sql = `UPDATE hero_detail SET eid=${eid},update_time=${Date.now()}  WHERE hid=${hid};`
     const res = await model.query(sql);
 
     if (res && res.affectedRows === 1) {
         ctx.body = Success_result;
+    } else {
+        throw new Error();
     }
-}
+})
 
 
 
