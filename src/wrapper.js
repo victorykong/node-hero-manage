@@ -15,7 +15,7 @@ const wrapper = ctx => async controller => {
     } catch (error) {
         // 切勿泄露太多 db 关键信息
         // ctx.body = { ...Error_result, message: error.sqlMessage || "sql query error!" }
-        ctx.body = { ...Error_result, message: "sql query error!" }
+        ctx.body = { ...Error_result, message: (!error.sqlMessage && error.message) || "sql query error!" }
     }
 }
 

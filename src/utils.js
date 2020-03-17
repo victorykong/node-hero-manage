@@ -1,4 +1,20 @@
 /**
+ * 映射的接口
+ * 需要转换的数据
+ */
+const url_map = {
+    get_added_hero_list: {
+        "extra_skills": ["eid", "extra_skills_name", "logo", "large_img"]
+    },
+    get_hero_detail: {
+        "extra_skills": ["eid", "extra_skills_name", "logo", "large_img"],
+        "skills": ["static", "first", "second", "third"],
+        "property": ["save", "attack", "skill"]
+    }
+};
+
+
+/**
  * 处理返回数据
  * @param {*} url   接口
  * @param {*} data  需要处理的数据
@@ -27,21 +43,16 @@ const formatResult = (url, data) => {
 }
 
 
+
 /**
- * 映射的接口
- * 需要转换的数据
+ * get 请求带参数，需格式化拿到 url
+ * @param {*} url 
  */
-const url_map = {
-    get_added_hero_list: {
-        "extra_skills": ["eid", "extra_skills_name", "logo", "large_img"]
-    },
-    get_hero_detail: {
-        "extra_skills": ["eid", "extra_skills_name", "logo", "large_img"],
-        "skills": ["static", "first", "second", "third"],
-        "property": ["save", "attack", "skill"]
-    }
-};
+const formatGetUrl = url => url.split("?")[0]
+
+
 
 module.exports = {
-    formatResult
+    formatResult,
+    formatGetUrl
 }

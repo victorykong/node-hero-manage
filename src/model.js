@@ -17,10 +17,11 @@ connection.connect(function (err) {
     console.log("connect success");
 });
 
-const query = sql => {
+
+const query = (sql, queryPlaceHolder) => {
     return new Promise((resolve, reject) => {
 
-        connection.query(sql, (error, results, fields) => {
+        connection.query(sql, queryPlaceHolder, (error, results, fields) => {
             if (error) {
                 reject(error);
             }
@@ -29,4 +30,6 @@ const query = sql => {
     })
 };
 
-module.exports = { query };
+module.exports = {
+    query,
+};
