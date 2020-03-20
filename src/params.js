@@ -16,6 +16,15 @@ const Params = {
     update_hero_extra_skills: {
         hid: "[object Number]",
         eid: "[object Number]"
+    },
+    hero_u_register: {
+        username: "[object String]",
+        password: "[object String]",
+        nickname: "[object String]"
+    },
+    hero_u_login: {
+        username: "[object String]",
+        password: "[object String]"
     }
 
 };

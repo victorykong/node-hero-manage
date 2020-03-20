@@ -43,6 +43,17 @@ const validateParams = () => {
 }
 
 
+
+// cookie session 校验
+const verifyPermission = () => async (ctx, next) => {
+    if (!ctx.session.user_info || !(ctx.session.user_info && ctx.session.user_info.id)) {
+        return ctx.body = { ...Error_result, code: -2, message: "身份已过期，请重新登录！" }
+    }
+    await next();
+}
+
+
 module.exports = {
-    validateParams
+    validateParams,
+    verifyPermission
 }

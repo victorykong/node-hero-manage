@@ -51,8 +51,25 @@ const formatResult = (url, data) => {
 const formatGetUrl = url => url.split("?")[0]
 
 
+/**
+ * 处理 ctx.request.header.cookie
+ * @param {*} cookie 
+ */
+const cookie2Object = cookie => {
+    const obj = {};
+    cookie.split(';').forEach(c => {
+        // 过滤多余空格
+        c = c.replace(/\s*/, "");
+        const temp = c.split("=");
+        obj[temp[0]] = temp[1];
+    })
+    return obj;
+}
+
+
 
 module.exports = {
     formatResult,
-    formatGetUrl
+    formatGetUrl,
+    cookie2Object
 }
