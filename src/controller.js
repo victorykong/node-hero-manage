@@ -201,17 +201,14 @@ const hero_u_login = async ctx => wrapper(ctx)(async () => {
 
 // 退出
 const hero_user_exit = async ctx => wrapper(ctx)(async () => {
-    const cookie = utils.cookie2Object(ctx.request.header.cookie);
-    const session_id = cookie[_config.session_key];
+    // const cookie = utils.cookie2Object(ctx.request.header.cookie);
+    // const session_id = cookie[_config.session_key];
 
-    ctx.session.user_info = null; // 清除 session
-    const result = await (new (require('./redis-store.js'))).destroy(session_id); // 清除 redis key 
+    ctx.session.user_info = null; // 清除 session, redis 中的信息变为 null
+    // const result = await (new (require('./redis-store.js'))).destroy(session_id); // 清除 redis key 
 
-    if (result) {
-        ctx.body = Success_result;
-    } else {
-        throw new Error('redis error');
-    }
+
+    ctx.body = Success_result;
 })
 
 
