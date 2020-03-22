@@ -46,6 +46,7 @@ const validateParams = () => {
 
 // cookie session 校验
 const verifyPermission = () => async (ctx, next) => {
+    console.log(ctx.session)
     // 还有一种情况就是前端 cookie 仍然存在 application, 并且也会携带该 cookie 进行请求, 但是 sessionID 对应的信息已经被清空
     if (!ctx.session.user_info || !(ctx.session.user_info && ctx.session.user_info.id)) {
         return ctx.body = { ...Error_result, code: -2, message: "身份已过期，请重新登录！" }
