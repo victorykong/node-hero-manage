@@ -20,7 +20,7 @@ const session_key = "hero_s_id";
 // session 配置
 const session_config = {
     key: session_key,
-    maxAge: 30 * 1000,
+    maxAge: 2 * 30 * 1000,
     autoCommit: true, // add response header
     overwrite: false,
     httpOnly: true,
